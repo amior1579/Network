@@ -15,4 +15,4 @@ class Posts(models.Model):
     post_date = models.DateField(primary_key=True)
 
     def __str__(self):
-        return '*'
+        return f'{self.post_uesr}'
