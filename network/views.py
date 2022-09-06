@@ -1,3 +1,4 @@
+from distutils.errors import LinkError
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
@@ -65,8 +66,11 @@ def register(request):
 
 def all_posts(request):
     all_post = Posts.objects.all()
+    # like = Posts.objects.filter('post_likes')
+
     return render(request, "network/all_posts.html",{
-        'posts': all_post
+        'posts': all_post,
+        # 'like':like
     })
 
 
