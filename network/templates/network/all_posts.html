@@ -21,6 +21,26 @@
 
             </div>
         </li>
-    {% endfor %}
+
+        {% endfor %}
+        <br>
+        <!-- has previous:{{posts.has_previous}} <br>
+            has next page:{{posts.has_next}} <br>
+            has number of pages:{{posts.paginator.num_pages}} <br> -->
+            
+        <div class="div_paginator">
+            {% if posts.has_previous %}
+                <a href="?page=1">&laquo First</a>
+                <a href="?page={{posts.previous_page_number}}">Previous</a>
+            {% endif %}
+    
+            {{posts}}
+    
+            {% if posts.has_next %}
+                <a href="?page={{posts.next_page_number}}">Last</a>
+                <a href="?page={{posts.paginator.num_pages}}">Next &raquo</a>
+            {% endif %}
+        </div>
+
 
 {% endblock %}

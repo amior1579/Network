@@ -4,6 +4,7 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.core.paginator import Paginator
 
 from .models import *
 
@@ -65,12 +66,12 @@ def register(request):
 
 
 def all_posts(request):
-    all_post = Posts.objects.all()
-    # like = Posts.objects.filter('post_likes')
-
+    all_post = Posts.objects.all().order_by('-id')
+    paginator = Paginator(all_post,6)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
     return render(request, "network/all_posts.html",{
-        'posts': all_post,
-        # 'like':like
+        'posts':posts
     })
 
 
@@ -87,3 +88,5 @@ def add_post(request):
     post = Posts(post_title=title, post_description=description, post_uesr=request.user)
     post.save()
     return HttpResponseRedirect(reverse('all_posts'))
+
+
