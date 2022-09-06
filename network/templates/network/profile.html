@@ -34,9 +34,18 @@
             <div class="div_posts">
                 <h2>{{all_posts.post_uesr}}</h2>
                 <h4>{{all_posts.post_title}}</h4>
+                
+                <div class="div_update_description_{{all_posts.id}}" id="div_update_description">
+                    <form action="{% url 'update_post' all_posts.id %}">
+                        <textarea name="update_description" id="" cols="30" rows="5"></textarea>
+                        <input type="submit">
+                    </form>
+                </div>
+
                 <p>{{all_posts.post_description}}</p>
                 <p>{{all_posts.post_date}}</p>
                 <p><button>Like</button>{{all_posts.post_likes}}</p>
+                <button id="edit_button" div-id="{{all_posts.id}}">Edit</button>
                 
             </div>
         </li>

@@ -5,6 +5,7 @@
 {% block head %}
     <title>All Posts</title>
     <link rel="stylesheet" href="{% static 'network/all_posts_style.css' %}">
+    <script src="{% static 'network/all_posts.js' %}"></script>
 {% endblock %}
 
 {% block body %}
@@ -13,11 +14,12 @@
     {% for all_posts in posts %}
         <li>
             <div class="div_posts">
-                <h2>{{all_posts.post_uesr}}</h2>
+                <h2>{{all_posts.post_uesr}}</h2><hr>
                 <h4>{{all_posts.post_title}}</h4>
                 <p>{{all_posts.post_description}}</p>
                 <p>{{all_posts.post_date}}</p>
                 <p id="like_count"><button value="{{all_posts.id}}" id="like_button">Like</button>{{all_posts.like_count}}</p>
+                
 
             </div>
         </li>

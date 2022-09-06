@@ -90,3 +90,5 @@ def add_post(request):
     return HttpResponseRedirect(reverse('all_posts'))
 
 
+def update_post(request,id):
+    pass
