@@ -71,7 +71,7 @@ def all_posts(request):
 
 
 def profile(request,user):
-    all_post = Posts.objects.all()
+    all_post = Posts.objects.filter(post_uesr = request.user)
     return render(request, 'network/profile.html',{
         'posts': all_post,
     })
