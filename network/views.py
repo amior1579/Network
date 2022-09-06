@@ -77,7 +77,8 @@ def profile(request,user):
     })
 
 def add_post(request):
-    user = request.POST['user']
     title = request.POST['title']
     description = request.POST['description']
-    post = Posts(request, post_uesr=user, post_title=title, post_description=description)
+    post = Posts(post_title=title, post_description=description, post_uesr=request.user)
+    post.save()
+    return HttpResponseRedirect(reverse('all_posts'))

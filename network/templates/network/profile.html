@@ -13,11 +13,10 @@
 <h1>Profile</h1>
 
 <div class="div_add_post">
-    <form action="add_post" method="post">
+    <form action="{% url 'add_post' %}" method="post">
         {% csrf_token %}
-        <input type="text" id="user"  name="user">
         <input type="text" id="title" name="title">
-        <textarea name="" id="description" cols="30" rows="10" name="description"></textarea>
+        <textarea cols="30" rows="10" name="description"></textarea>
         <input type="submit">
     </form>
 
