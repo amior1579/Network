@@ -5,12 +5,15 @@
     <title>Profile</title>
     <link rel="stylesheet" href="{% static 'network/all_posts_style.css' %}">
     <link rel="stylesheet" href="{% static 'network/profile.css' %}">
+    <script src="{% static 'network/index.js' %}"></script>
 
 {% endblock %}
 
 {% block body %}
 
 <h1>Profile</h1>
+
+<button id="new_post_button">New Post</button>
 
 <div class="div_add_post">
     <form action="{% url 'add_post' %}" method="post">
