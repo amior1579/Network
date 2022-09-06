@@ -1,0 +1,9 @@
+.div_posts{
+    border: solid 1px black;
+    padding: 10px;
+}
+
+li{
+    display: inline-block;
+    margin-left: 20px;
+}

@@ -1,14 +1,25 @@
 {% extends 'network/layout.html' %}
+{% load static %}
 
-{% block header %}
+
+{% block head %}
     <title>All Posts</title>
+    <link rel="stylesheet" href="{% static 'network/all_posts_style.css' %}">
 {% endblock %}
 
 {% block body %}
 
     <h1>All Posts</h1>
     {% for all_posts in posts %}
-        <h1></h1>
+        <li>
+            <div class="div_posts">
+                <h2>{{all_posts.post_uesr}}</h2>
+                <h4>{{all_posts.post_title}}</h4>
+                <p>{{all_posts.post_description}}</p>
+                <p>{{all_posts.post_date}}</p>
+                <p>{{all_posts.post_likes}}</p>
+            </div>
+        </li>
     {% endfor %}
 
 {% endblock %}
