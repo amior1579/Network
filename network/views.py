@@ -76,6 +76,7 @@ def profile(request,user):
         'posts': all_post,
     })
 
+
 def add_post(request):
     title = request.POST['title']
     description = request.POST['description']
