@@ -68,3 +68,16 @@ def all_posts(request):
     return render(request, "network/all_posts.html",{
         'posts': all_post
     })
+
+
+def profile(request,user):
+    all_post = Posts.objects.all()
+    return render(request, 'network/profile.html',{
+        'posts': all_post,
+    })
+
+def add_post(request):
+    user = request.POST['user']
+    title = request.POST['title']
+    description = request.POST['description']
+    post = Posts(request, post_uesr=user, post_title=title, post_description=description)

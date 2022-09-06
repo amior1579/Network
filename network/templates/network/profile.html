@@ -1,0 +1,42 @@
+{% extends 'network/layout.html' %}
+{% load static %}
+
+{% block head %}
+    <title>Profile</title>
+    <link rel="stylesheet" href="{% static 'network/all_posts_style.css' %}">
+    <link rel="stylesheet" href="{% static 'network/profile.css' %}">
+
+{% endblock %}
+
+{% block body %}
+
+<h1>Profile</h1>
+
+<div class="div_add_post">
+    <form action="add_post" method="post">
+        {% csrf_token %}
+        <input type="text" id="user"  name="user">
+        <input type="text" id="title" name="title">
+        <textarea name="" id="description" cols="30" rows="10" name="description"></textarea>
+        <input type="submit">
+    </form>
+
+    
+</div>
+
+
+<div>
+    {% for all_posts in posts %}
+        <li>
+            <div class="div_posts">
+                <h2>{{all_posts.post_uesr}}</h2>
+                <h4>{{all_posts.post_title}}</h4>
+                <p>{{all_posts.post_description}}</p>
+                <p>{{all_posts.post_date}}</p>
+                <p>{{all_posts.post_likes}}</p>
+            </div>
+        </li>
+    {% endfor %}
+    {{user}}
+</div>
+{% endblock %}
