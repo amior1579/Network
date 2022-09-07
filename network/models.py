@@ -20,3 +20,11 @@ class Posts(models.Model):
     def __str__(self):
         return f'{self.id}.{self.post_title},{self.post_uesr}'
 
+    def serialize(self):
+        return {
+            "id": self.id,
+            "post_title": self.post_title,
+            "description": self.post_description,
+            "post_date": self.post_date
+        }
+

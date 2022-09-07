@@ -12,4 +12,9 @@ urlpatterns = [
     path("profile/<str:user>", views.profile, name="profile"),
     path("add_post", views.add_post, name="add_post"),
     path("update_post/<int:id>", views.update_post, name="update_post"),
+
+    # API Routes
+    path("posts", views.posts, name="posts"),
+    path("posts/<int:id>", views.posts_id, name="posts_id"),
+
 ]

@@ -1,10 +1,16 @@
 from distutils.errors import LinkError
+from tkinter import NO
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.http import JsonResponse
+import json
 from django.urls import reverse
 from django.core.paginator import Paginator
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+
 
 from .models import *
 
@@ -88,7 +94,38 @@ def add_post(request):
     post = Posts(post_title=title, post_description=description, post_uesr=request.user)
     post.save()
     return HttpResponseRedirect(reverse('all_posts'))
+    # return JsonResponse({"message": "send post."}, status=201)
 
 
 def update_post(request,id):
     pass
+
+@login_required
+def posts(request):
+    post = Posts.objects.filter(post_uesr = request.user)
+    return JsonResponse([posts.serialize() for posts in post], safe=False)
+
+    
+
+@csrf_exempt
+@login_required
+def posts_id(request,id):
+    try:
+        post = Posts.objects.get(id = id)
+    except Posts.DoesNotExist:
+        return JsonResponse({"error": "post not found."}, status=404)
+
+    if request.method == "GET":
+        return JsonResponse(post.serialize())
+
+    elif request.method == 'PUT':
+        data = json.loads(request.body)
+        description = data.get("description", None)
+
+        post.description = description
+        post.save()
+
+        return HttpResponse(status=204)
+    else:
+        return JsonResponse({"error": "GET or PUT request required."}, status=400)
+        # return JsonResponse([posts.serialize() for posts in post], safe=False)
