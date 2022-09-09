@@ -10,6 +10,9 @@ from django.urls import reverse
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .serializers import *
 
 
 from .models import *
@@ -105,27 +108,45 @@ def posts(request):
     post = Posts.objects.filter(post_uesr = request.user)
     return JsonResponse([posts.serialize() for posts in post], safe=False)
 
+
+@api_view(['GET'])
+def posts(request):
+    post = Posts.objects.filter(post_uesr = request.user)
+    serializer = PostsSerializer(post, many=True)
+    return Response(serializer.data)
     
 
 @csrf_exempt
-@login_required
+@api_view(['GET', 'PUT'])
 def posts_id(request,id):
     try:
         post = Posts.objects.get(id = id)
     except Posts.DoesNotExist:
-        return JsonResponse({"error": "post not found."}, status=404)
+        return Response({"error": "post not found."}, status=404)
 
     if request.method == "GET":
-        return JsonResponse(post.serialize())
+        serializer = PostsSerializer(post)
+        return Response(serializer.data)
 
     elif request.method == 'PUT':
-        data = json.loads(request.body)
-        description = data.get("description", None)
-
-        post.description = description
-        post.save()
-
-        return HttpResponse(status=204)
+        serializer = PostsSerializer(post, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return JsonResponse({"error": "GET or PUT request required."}, status=400)
     else:
         return JsonResponse({"error": "GET or PUT request required."}, status=400)
         # return JsonResponse([posts.serialize() for posts in post], safe=False)
+
+
+@api_view(['GET'])
+def api(request):
+    api_urls ={
+        'List':'/task-list/',
+        'Detail View':'/task-detail/<str:pk>/',
+        'Create':'/task-create/',
+        'Update':'/task-update/<str:pk>/',
+        'Delete':'/task-delete/<str:pk>/',
+        
+    }
+    return Response(api_urls)
