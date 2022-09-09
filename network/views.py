@@ -131,7 +131,7 @@ def follower(request):
             followers = Followers.objects.create(follower=follower, user=user)
             followers.save()
         elif value == 'Unfollow':
-            unfollow = Followers.objects.get(follower=follower)
+            unfollow = Followers.objects.get(follower=follower, user=user)
             unfollow.delete()
         return redirect('profile', user=user)
 
