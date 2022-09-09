@@ -1,0 +1,46 @@
+{% extends 'network/layout.html' %}
+{% load static %}
+
+
+{% block head %}
+    <title>All Posts</title>
+    <link rel="stylesheet" href="{% static 'network/all_posts_style.css' %}">
+    <script src="{% static 'network/all_posts.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+
+    {% for all_posts in posts %}
+        <li>
+            <div class="div_posts">
+                <a href="{% url 'profile' all_posts.post_uesr %}">{{all_posts.post_uesr}}</a><hr>
+                <h4>{{all_posts.post_title}}</h4>
+                <p>{{all_posts.post_description}}</p>
+                <p>{{all_posts.post_date}}</p>
+                <p id="like_count"><button value="{{all_posts.id}}" id="like_button">Like</button>{{all_posts.post_likes.count}}</p>
+                
+
+            </div>
+        </li>
+
+        {% endfor %}
+        <br>
+        <!-- has previous:{{posts.has_previous}} <br>
+            has next page:{{posts.has_next}} <br>
+            has number of pages:{{posts.paginator.num_pages}} <br> -->
+            
+        <div class="div_paginator">
+            {% if posts.has_previous %}
+                <a href="?page=1">&laquo First</a>
+                <a href="?page={{posts.previous_page_number}}">Previous</a>
+            {% endif %}
+    
+            {{posts}}
+    
+            {% if posts.has_next %}
+                <a href="?page={{posts.next_page_number}}">Last</a>
+                <a href="?page={{posts.paginator.num_pages}}">Next &raquo</a>
+            {% endif %}
+        </div>
+
+{% endblock %}

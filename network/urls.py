@@ -12,9 +12,11 @@ urlpatterns = [
     path("my_account/<str:user>", views.my_account, name="my_account"),
     path("profile/<str:user>", views.profile, name="profile"),
     path("add_post", views.add_post, name="add_post"),
+    path("follower", views.follower, name="follower"),
+    path("following_posts", views.following_posts, name="following_posts"),
+
     path("update_post/<int:id>", views.update_post, name="update_post"),
 
-    path("follower", views.follower, name="follower"),
 
     # API Routes
     path("posts", views.posts, name="posts"),

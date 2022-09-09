@@ -4,7 +4,7 @@
 {% block head %}
     <title>Profile</title>
     <link rel="stylesheet" href="{% static 'network/all_posts_style.css' %}">
-    <link rel="stylesheet" href="{% static 'network/my_account.css' %}">
+    <link rel="stylesheet" href="{% static 'network/profile.css' %}">
     <script src="{% static 'network/index.js' %}"></script>
 
 {% endblock %}
@@ -13,7 +13,25 @@
 
 <h1>Profile</h1>
 
-<button id="new_post_button">New Post</button>
+<div class="div_user_profile">
+    <li class="li_user_profile">
+        <div>Followers</div>
+        <div>{{follower_len}}</div>
+    </li>
+
+    <li class="li_user_profile">
+        <div class="username"><h2>{{user}}</h2></div>
+    </li>
+
+    <li class="li_user_profile">
+        <div>Following</div>
+        <div>{{following_len}}</div>
+    </li>
+</div>
+
+<div>
+    <button id="new_post_button">New Post</button>
+</div>
 
 <div class="div_add_post">
     <form action="{% url 'add_post' %}" method="post">

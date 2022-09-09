@@ -87,8 +87,12 @@ def all_posts(request):
 
 def my_account(request,user):
     all_post = Posts.objects.filter(post_uesr = request.user)
+    follower_len = Followers.objects.filter(user = user).count()
+    following_len = Followers.objects.filter(follower = user).count()
     return render(request, 'network/my_account.html',{
         'posts': all_post,
+        'follower_len': follower_len,
+        'following_len': following_len,
     })
 
 def profile(request,user):
@@ -131,6 +135,15 @@ def follower(request):
             unfollow.delete()
         return redirect('profile', user=user)
 
+
+def following_posts(request):
+    all_post = Posts.objects.all()
+    paginator = Paginator(all_post,10)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
+    return render(request, 'network/following_posts.html',{
+        'posts':posts,
+    })
 
 def add_post(request):
     title = request.POST['title']
