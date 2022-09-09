@@ -1,9 +1,10 @@
+from ast import Not
 from distutils.errors import LinkError
 from tkinter import NO
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import JsonResponse
 import json
 from django.urls import reverse
@@ -91,13 +92,45 @@ def my_account(request,user):
     })
 
 def profile(request,user):
-    userr = User.objects.get(username = user)
-    all_post = Posts.objects.filter(post_uesr = userr)
-    # all_post = Posts.objects.all()
+    follower = request.user
+    user = User.objects.get(username = user)
+    all_post_user = Posts.objects.filter(post_uesr = user) 
+    follower_len = Followers.objects.filter(user = user).count()
+    following_len = Followers.objects.filter(follower = user).count()
+    user_follower = Followers.objects.filter(user = user)
+    user_follower_lists = []
+    for i in user_follower:
+        user_follower = i.follower
+        user_follower_lists.append(user_follower)
+
+    print(user_follower_lists)
+    if follower.username in user_follower_lists is not None:
+        button_and_value = 'Unfollow'
+    else:
+        button_and_value = 'Follow'
+
     return render(request, 'network/profile.html',{
-        'posts': all_post,
-        'user':userr,
+        'posts': all_post_user,
+        'user':user,
+        'follower':follower,
+        'follower_len':follower_len,
+        'following_len':following_len,
+        'button_and_value':button_and_value,
     })
+
+def follower(request):
+    if request.method == 'POST':
+        value = request.POST['value']
+        user = request.POST['user']
+        follower = request.POST['follower']
+        if value == 'Follow':
+            followers = Followers.objects.create(follower=follower, user=user)
+            followers.save()
+        elif value == 'Unfollow':
+            unfollow = Followers.objects.get(follower=follower)
+            unfollow.delete()
+        return redirect('profile', user=user)
+
 
 def add_post(request):
     title = request.POST['title']
@@ -158,3 +191,5 @@ def api(request):
         
     }
     return Response(api_urls)
+
+

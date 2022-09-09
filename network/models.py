@@ -8,6 +8,21 @@ from .models import *
 class User(AbstractUser):
     pass
 
+# class Followers(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='user')
+#     follower = models.ManyToManyField(User,blank=True,default=None, related_name='follower')
+#     following = models.ManyToManyField(User,blank=True,default=None, related_name='following')
+
+#     def __str__(self):
+#         return f'{self.user}.{self.follower},{self.following}'
+
+class Followers(models.Model):
+    user = models.CharField(max_length=1000, null=True)
+    follower = models.CharField(max_length=1000, null=True)
+
+    def __str__(self):
+        return f'{self.follower},  followed {self.user}'
+
 class Posts(models.Model):
     id = models.AutoField(primary_key=True)
     post_uesr = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,related_name='create_user')

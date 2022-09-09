@@ -15,15 +15,23 @@
 <div class="div_user_profile">
     <li class="li_user_profile">
         <div>Followers</div>
-        <div>0</div>
+        <div>{{follower_len}}</div>
     </li>
+
     <li class="li_user_profile">
         <div class="username"><h2>{{user}}</h2></div>
-        <div class="follow_button"><button>Follow</button></div>
+        <form action="{% url 'follower' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="user" value="{{user}}">
+            <input type="hidden" name="follower" value="{{follower}}">
+            <input type="hidden" name="value" value="{{button_and_value}}" readonly>
+            <button type="submit">{{button_and_value}}</button>
+        </form>
     </li>
+
     <li class="li_user_profile">
         <div>Following</div>
-        <div>0</div>
+        <div>{{following_len}}</div>
     </li>
 </div>
 
