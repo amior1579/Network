@@ -14,7 +14,7 @@
     {% for all_posts in posts %}
         <li>
             <div class="div_posts">
-                <h2>{{all_posts.post_uesr}}</h2><hr>
+                <a href="{% url 'profile' all_posts.post_uesr %}">{{all_posts.post_uesr}}</a><hr>
                 <h4>{{all_posts.post_title}}</h4>
                 <p>{{all_posts.post_description}}</p>
                 <p>{{all_posts.post_date}}</p>
@@ -43,6 +43,5 @@
                 <a href="?page={{posts.paginator.num_pages}}">Next &raquo</a>
             {% endif %}
         </div>
-
 
 {% endblock %}

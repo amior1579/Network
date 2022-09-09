@@ -1,0 +1,55 @@
+{% extends 'network/layout.html' %}
+{% load static %}
+
+{% block head %}
+    <title>Profile</title>
+    <link rel="stylesheet" href="{% static 'network/all_posts_style.css' %}">
+    <link rel="stylesheet" href="{% static 'network/profile.css' %}">
+    <script src="{% static 'network/index.js' %}"></script>
+
+{% endblock %}
+
+{% block body %}
+
+<h1>Profile</h1>
+
+<button id="new_post_button">New Post</button>
+
+<div class="div_add_post">
+    <form action="{% url 'add_post' %}" method="post">
+        {% csrf_token %}
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title">
+
+        <label for="description">Description:</label>
+        <textarea cols="20" rows="5" name="description" id="description"></textarea>
+        <input type="submit">
+    </form>
+</div>
+
+
+<div>
+    {% for all_posts in posts %}
+        <li>
+            <div class="div_posts">
+                <h2>{{all_posts.post_uesr}}</h2>
+                <h4>{{all_posts.post_title}}</h4>
+                
+                <div class="div_update_description_{{all_posts.id}}" id="div_update_description">
+                    <!-- <form action="" id="update_description"> -->
+                        <textarea name="update_description" id="form_update_description_{{all_posts.id}}" cols="30" rows="5"></textarea>
+                        <input type="submit" id="submit_button_{{all_posts.id}}">
+                    <!-- </form> -->
+                </div>
+
+                <p id="post_description_{{all_posts.id}}">{{all_posts.post_description}}</p>
+                <p>{{all_posts.post_date}}</p>
+                <p><button>Like</button>{{all_posts.post_likes}}</p>
+                <button id="edit_button_{{all_posts.id}}" div-id="{{all_posts.id}}">Edit</button>
+                
+            </div>
+        </li>
+    {% endfor %}
+    {{user}}
+</div>
+{% endblock %}
