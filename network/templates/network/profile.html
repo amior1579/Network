@@ -3,7 +3,7 @@
 
 {% block head %}
     <title>Profile</title>
-    <link rel="stylesheet" href="{% static 'network/all_posts_style.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'network/all_posts_style.css' %}"> -->
     <link rel="stylesheet" href="{% static 'network/profile.css' %}">
     <script src="{% static 'network/index.js' %}"></script>
 
@@ -11,12 +11,28 @@
 
 {% block body %}
 
-<h1>Profile</h1>
 
-<div>
+<div class="div_user_profile">
+    <li class="li_user_profile">
+        <div>Followers</div>
+        <div>0</div>
+    </li>
+    <li class="li_user_profile">
+        <div class="username"><h2>{{user}}</h2></div>
+        <div class="follow_button"><button>Follow</button></div>
+    </li>
+    <li class="li_user_profile">
+        <div>Following</div>
+        <div>0</div>
+    </li>
+</div>
+
+
+
+<div class="div_posts">
     {% for all_posts in posts %}
-        <li>
-            <div class="div_posts">
+        <li class="li_posts">
+            <div class="div_single_post">
                 <h2>{{all_posts.post_uesr}}</h2>
                 <h4>{{all_posts.post_title}}</h4>
                 <p id="post_description_{{all_posts.id}}">{{all_posts.post_description}}</p>
@@ -26,6 +42,6 @@
             </div>
         </li>
     {% endfor %}
-
 </div>
+
 {% endblock %}

@@ -91,11 +91,12 @@ def my_account(request,user):
     })
 
 def profile(request,user):
-    user = User.objects.get(username = user)
-    all_post = Posts.objects.filter(post_uesr = user)
+    userr = User.objects.get(username = user)
+    all_post = Posts.objects.filter(post_uesr = userr)
     # all_post = Posts.objects.all()
     return render(request, 'network/profile.html',{
         'posts': all_post,
+        'user':userr,
     })
 
 def add_post(request):

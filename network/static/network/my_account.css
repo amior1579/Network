@@ -1,0 +1,11 @@
+input{
+    display: block;
+    margin-top: 10px;
+}
+
+#new_post_button{
+    display: block;
+    margin: auto;
+    text-align: center;
+    
+}
