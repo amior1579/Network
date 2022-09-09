@@ -137,12 +137,16 @@ def follower(request):
 
 
 def following_posts(request):
-    all_post = Posts.objects.all()
-    paginator = Paginator(all_post,10)
-    page = request.GET.get('page')
-    posts = paginator.get_page(page)
+    user = request.user
+    userr = User.objects.get(username = request.user)
+    # followers = Followers.objects.filter(follower=userr)
+    # print(followers)
+    # all_post = Posts.objects.filter(post_uesr = followers)
+    # paginator = Paginator(all_post,10)
+    # page = request.GET.get('page')
+    # posts = paginator.get_page(page)
     return render(request, 'network/following_posts.html',{
-        'posts':posts,
+        # 'posts':posts,
     })
 
 def add_post(request):
