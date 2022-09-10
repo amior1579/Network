@@ -18,7 +18,8 @@
                 <h4>{{all_posts.post_title}}</h4>
                 <p>{{all_posts.post_description}}</p>
                 <p>{{all_posts.post_date}}</p>
-                <p id="like_count"><button value="{{all_posts.id}}" id="like_button">Like</button>{{all_posts.post_likes.count}}</p>
+                <p id="like_count_{{all_posts.id}}">{{all_posts.post_likes.count}}</p>
+                <button value="{{all_posts.id}}" id="like_button">Like</button>
                 
 
             </div>

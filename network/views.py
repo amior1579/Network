@@ -76,7 +76,8 @@ def register(request):
 
 
 def all_posts(request):
-    all_post = Posts.objects.all().exclude(post_uesr = request.user).order_by('-id')
+    # all_post = Posts.objects.all().exclude(post_uesr = request.user).order_by('-id')
+    all_post = Posts.objects.all().order_by('-id')
     print(all_post)
     paginator = Paginator(all_post,10)
     page = request.GET.get('page')
@@ -174,13 +175,17 @@ def add_post(request):
     # return JsonResponse({"message": "send post."}, status=201)
 
 
+
+
+
+
 def update_post(request,id):
     pass
 
-@login_required
-def posts(request):
-    post = Posts.objects.filter(post_uesr = request.user)
-    return JsonResponse([posts.serialize() for posts in post], safe=False)
+# @login_required
+# def posts(request):
+#     post = Posts.objects.filter(post_uesr = request.user)
+#     return JsonResponse([posts.serialize() for posts in post], safe=False)
 
 
 @api_view(['GET'])
@@ -206,7 +211,7 @@ def posts_id(request,id):
         serializer = PostsSerializer(post, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return HttpResponse(status=204)
         return JsonResponse({"error": "GET or PUT request required."}, status=400)
     else:
         return JsonResponse({"error": "GET or PUT request required."}, status=400)
