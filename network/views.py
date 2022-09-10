@@ -77,6 +77,7 @@ def register(request):
 
 def all_posts(request):
     all_post = Posts.objects.all().exclude(post_uesr = request.user).order_by('-id')
+    print(all_post)
     paginator = Paginator(all_post,10)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
@@ -87,8 +88,9 @@ def all_posts(request):
 
 def my_account(request,user):
     all_post = Posts.objects.filter(post_uesr = request.user)
-    follower_len = Followers.objects.filter(user = user).count()
-    following_len = Followers.objects.filter(follower = user).count()
+    userr = User.objects.get(username = user)
+    follower_len = Followers.objects.filter(followed_users = userr).count()
+    following_len = Followers.objects.filter(follower = userr).count()
     return render(request, 'network/my_account.html',{
         'posts': all_post,
         'follower_len': follower_len,
@@ -99,16 +101,16 @@ def profile(request,user):
     follower = request.user
     user = User.objects.get(username = user)
     all_post_user = Posts.objects.filter(post_uesr = user) 
-    follower_len = Followers.objects.filter(user = user).count()
+    followed_users_len = Followers.objects.filter(followed_users = user).count()
     following_len = Followers.objects.filter(follower = user).count()
-    user_follower = Followers.objects.filter(user = user)
-    user_follower_lists = []
-    for i in user_follower:
-        user_follower = i.follower
-        user_follower_lists.append(user_follower)
+    followed_users = Followers.objects.filter(followed_users = user)
+    followed_users_list = []
+    for i in followed_users:
+        for_followed_users = i.follower
+        followed_users_list.append(for_followed_users.username)
 
-    print(user_follower_lists)
-    if follower.username in user_follower_lists is not None:
+    # print(followed_users_list)
+    if follower.username in followed_users_list is not None:
         button_and_value = 'Unfollow'
     else:
         button_and_value = 'Follow'
@@ -117,7 +119,7 @@ def profile(request,user):
         'posts': all_post_user,
         'user':user,
         'follower':follower,
-        'follower_len':follower_len,
+        'follower_len':followed_users_len,
         'following_len':following_len,
         'button_and_value':button_and_value,
     })
@@ -125,29 +127,43 @@ def profile(request,user):
 def follower(request):
     if request.method == 'POST':
         value = request.POST['value']
-        user = request.POST['user']
-        follower = request.POST['follower']
+        followed_users = request.POST['user']
+        follower = request.user
+        followed_users_username = User.objects.get(username = followed_users)
+        
         if value == 'Follow':
-            followers = Followers.objects.create(follower=follower, user=user)
+            followers = Followers.objects.create(follower=follower, followed_users=followed_users_username)
             followers.save()
+            print(followers)
         elif value == 'Unfollow':
-            unfollow = Followers.objects.get(follower=follower, user=user)
+            unfollow = Followers.objects.get(follower=follower, followed_users=followed_users_username)
             unfollow.delete()
-        return redirect('profile', user=user)
+        return redirect('profile', user=followed_users)
 
 
 def following_posts(request):
-    user = request.user
-    userr = User.objects.get(username = request.user)
-    # followers = Followers.objects.filter(follower=userr)
-    # print(followers)
-    # all_post = Posts.objects.filter(post_uesr = followers)
-    # paginator = Paginator(all_post,10)
-    # page = request.GET.get('page')
-    # posts = paginator.get_page(page)
+    followed_users_list = []
+    posts_list = []
+    username1 = User.objects.get(username = request.user)
+    followers = Followers.objects.filter(follower=username1)
+    for i in followers:
+        followed_users_list.append(i.followed_users)
+
+    for x in followed_users_list:
+        username2 = User.objects.get(username = x)
+        all_post = Posts.objects.filter(post_uesr = username2)
+
+        for y in all_post:
+            posts_list.append(y)
+
+    # print(posts_list)
+    paginator = Paginator(posts_list,10)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
     return render(request, 'network/following_posts.html',{
-        # 'posts':posts,
+        'posts':posts,
     })
+
 
 def add_post(request):
     title = request.POST['title']
