@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded',function(){
 
     function edit_post(posts){
         document.querySelector(`.div_update_description_${posts.id}`).style.display = 'block'
+        document.querySelector(`#post_description_${posts.id}`).style.display = 'none'
         const form_update =  document.querySelector(`#form_update_description_${posts.id}`)
         form_update.innerHTML = document.querySelector(`#post_description_${posts.id}`).innerHTML
         console.log(posts.id);
@@ -69,6 +70,8 @@ document.addEventListener('DOMContentLoaded',function(){
   
             document.querySelector(`.div_update_description_${posts.id}`).style.display = 'none'
             document.querySelector(`#post_description_${posts.id}`).innerHTML = form_update.value
+            document.querySelector(`#post_description_${posts.id}`).style.display = 'block'
+
         })
     }
 
