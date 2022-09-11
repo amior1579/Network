@@ -30,8 +30,8 @@ class Posts(models.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "post_title": self.post_title,
+            "title": self.post_title,
             "description": self.post_description,
-            "post_date": self.post_date
+            "date": self.post_date
         }
 

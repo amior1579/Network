@@ -54,11 +54,9 @@
                 <h4>{{all_posts.post_title}}</h4>
                 
                 <div class="div_update_description_{{all_posts.id}}" id="div_update_description">
-                    <!-- <form action="" id="update_description"> -->
                         {% csrf_token %}
                         <textarea name="update_description" id="form_update_description_{{all_posts.id}}" cols="30" rows="5"></textarea>
                         <input type="submit" id="submit_button_{{all_posts.id}}">
-                    <!-- </form> -->
                 </div>
 
                 <p id="post_description_{{all_posts.id}}">{{all_posts.post_description}}</p>
