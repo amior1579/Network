@@ -76,9 +76,9 @@ def register(request):
 
 
 def all_posts(request):
-    all_post = Posts.objects.all().exclude(post_uesr = request.user).order_by('-id')
-    # all_post = Posts.objects.all().order_by('-id')
-    print(all_post)
+
+    # all_post = Posts.objects.all().exclude(post_uesr = request.user).order_by('-id')
+    all_post = Posts.objects.all().order_by('-id')
     paginator = Paginator(all_post,10)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
@@ -209,6 +209,59 @@ def posts_id(request, id):
     else:
         return JsonResponse({"error": "GET or PUT request required."}, status=400)
 
+
+def like(request):
+    user = request.user
+    # post = Posts.objects.get(id = id)
+    like = Likes.objects.all()
+    return JsonResponse([likes.serialize() for likes in like], safe=False)
+
+    # like.post_like = post
+    # like.user_liker = user
+    # like.save()
+
+
+def like_post(request,id):
+    # like = Likes.objects.get(id = id)
+    like = Likes.objects.all()
+    posts = Posts.objects.get(id=id)
+
+
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        data.user_liker = request.user
+        data.post_like = posts
+        data.save()
+
+        return JsonResponse({"message": "successfully."}, status=201)
+
+    # if request.method == "GET":
+    #     return JsonResponse(like.serialize())
+
+    # elif request.method == "PUT":
+    #     data = json.loads(request.body)
+    #     like.post_description = data["description"]
+    #     like.save()
+    #     return HttpResponse(status=204)
+
+    # else:
+    #     return JsonResponse({"error": "GET or PUT request required."}, status=400)
+
+
+
+
+
+
+
+    # if request.method == "GET":
+    #     return JsonResponse(like.serialize())
+
+    # if( user in post.post_likes).exist():
+    #     post.post_likes.remove(user)
+    # else:
+    #     post.post_likes.add(user)
+
+    # return redirect('all_posts')
 
 # @api_view(['GET'])
 # def posts(request):

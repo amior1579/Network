@@ -32,6 +32,28 @@ class Posts(models.Model):
             "id": self.id,
             "title": self.post_title,
             "description": self.post_description,
-            "date": self.post_date
+            "date": self.post_date,
+            "like": self.like_count,
         }
+
+
+
+class Likes(models.Model):
+    id = models.AutoField(primary_key=True)
+    user_liker = models.CharField(max_length=200, null=True)
+    post_like = models.CharField(max_length=200, null=True)
+    like_count = models.BigIntegerField(default=0)
+
+    def __str__(self):
+        return f'{self.user_liker}.{self.post_like}'
+
+    def serialize(self):
+        return {
+            # "user": self.user_liker,
+            "id": self.id,
+            "post": self.post_like,
+            "like": self.like_count,
+
+        }
+
 

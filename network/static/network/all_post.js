@@ -7,14 +7,15 @@ document.addEventListener('DOMContentLoaded',function(){
             console.log(posts);
             console.log(posts.id);
 
-            const like = document.querySelector('#like_button')
-            console.log(like);
-            like.addEventListener('click', ()=> like_post(posts))
+            const like = document.querySelector(`#like_button_${posts.id}`)
+            like.onclick = ()=> like_post(posts)
+            
         })
     })
 
     function like_post(posts){
         console.log(posts.id);
     }
+
 
 })

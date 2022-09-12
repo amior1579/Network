@@ -22,10 +22,6 @@ document.addEventListener('DOMContentLoaded',function(){
             const edit = document.querySelector(`#edit_button_${posts.id}`)
             edit.addEventListener('click', ()=> edit_post(posts))
 
-
-            // const like = document.querySelector(`#like_count_${posts.id}`)
-            // edit.addEventListener('click', ()=> like_post(posts))
-
             
             
 
