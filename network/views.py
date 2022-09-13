@@ -78,13 +78,18 @@ def register(request):
 def all_posts(request):
 
     # all_post = Posts.objects.all().exclude(post_uesr = request.user).order_by('-id')
+    # likes = Likes.objects.all()
+    # post = Posts.objects.all
+    # user_list = []
+    # for i in likes:
+    #     users = i.user_liker
+    #     user_list.append(users)
+    # print(user_list)
+    # posts.like_count = like
     all_post = Posts.objects.all().order_by('-id')
     paginator = Paginator(all_post,10)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
-    # likes = Likes.objects.all()
-    # print(likes)
-    # posts.like_count = like
     return render(request, "network/all_posts.html",{
         'posts':posts,
         # 'likes':likes,
@@ -233,6 +238,15 @@ def like(request):
             post_like = post,
         )
         likes.save()
+        likes = Likes.objects.all()
+        post = Posts.objects.get(id = post)
+        # print(post.post_likes)
+        # user_list = []
+        # for i in likes:
+        #     users = i.user_liker
+        #     user = User.objects.get(username = users)
+        (post.post_likes).add(request.user)
+        # print(user_list)
 
         return JsonResponse({"message": "successfully."}, status=201)
 
