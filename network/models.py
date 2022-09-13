@@ -34,6 +34,7 @@ class Posts(models.Model):
             "description": self.post_description,
             "date": self.post_date,
             "like": self.like_count,
+            "post_likes": self.post_likes.count(),
         }
 
 
@@ -49,8 +50,8 @@ class Likes(models.Model):
 
     def serialize(self):
         return {
-            # "user": self.user_liker,
             "id": self.id,
+            "user": self.user_liker,
             "post": self.post_like,
             "like": self.like_count,
 

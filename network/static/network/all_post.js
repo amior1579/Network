@@ -8,13 +8,23 @@ document.addEventListener('DOMContentLoaded',function(){
             console.log(posts.id);
 
             const like = document.querySelector(`#like_button_${posts.id}`)
-            like.onclick = ()=> like_post(posts)
+            like.addEventListener('click', ()=> like_post(posts))
+            console.log(like);
             
         })
     })
 
     function like_post(posts){
         console.log(posts.id);
+
+        fetch('/like',{
+            method:'POST',
+            headers: {'Content-Type': 'application/json',},
+            body: JSON.stringify ({
+                post: `${posts.id}`
+                // post: 'aaaaaa'
+            })
+        })
     }
 
 

@@ -82,8 +82,12 @@ def all_posts(request):
     paginator = Paginator(all_post,10)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
+    # likes = Likes.objects.all()
+    # print(likes)
+    # posts.like_count = like
     return render(request, "network/all_posts.html",{
-        'posts':posts
+        'posts':posts,
+        # 'likes':likes,
     })
 
 
@@ -184,7 +188,8 @@ def update_post(request,id):
 
 @login_required
 def posts(request):
-    post = Posts.objects.filter(post_uesr = request.user)
+    # post = Posts.objects.filter(post_uesr = request.user)
+    post = Posts.objects.all().order_by('-id')
     return JsonResponse([posts.serialize() for posts in post], safe=False)
 
 
@@ -209,31 +214,38 @@ def posts_id(request, id):
     else:
         return JsonResponse({"error": "GET or PUT request required."}, status=400)
 
-
+@login_required
+@csrf_exempt
 def like(request):
     user = request.user
-    # post = Posts.objects.get(id = id)
     like = Likes.objects.all()
-    return JsonResponse([likes.serialize() for likes in like], safe=False)
+    # posts = Posts.objects.get(id=id)
+    # post = Posts.objects.get(id = id)
+    if request.method == "GET":
+        return JsonResponse([likes.serialize() for likes in like], safe=False)
 
-    # like.post_like = post
-    # like.user_liker = user
-    # like.save()
+
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        post = data.get("post", "")
+        likes = Likes(
+            user_liker = user,
+            post_like = post,
+        )
+        likes.save()
+
+        return JsonResponse({"message": "successfully."}, status=201)
 
 
-def like_post(request,id):
+@login_required
+@csrf_exempt
+def like_post(request):
     # like = Likes.objects.get(id = id)
     like = Likes.objects.all()
     posts = Posts.objects.get(id=id)
 
 
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        data.user_liker = request.user
-        data.post_like = posts
-        data.save()
 
-        return JsonResponse({"message": "successfully."}, status=201)
 
     # if request.method == "GET":
     #     return JsonResponse(like.serialize())
