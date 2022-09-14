@@ -1,5 +1,6 @@
 from ast import Not
 from distutils.errors import LinkError
+from genericpath import exists
 from tkinter import NO
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
@@ -76,23 +77,27 @@ def register(request):
 
 
 def all_posts(request):
-
-    # all_post = Posts.objects.all().exclude(post_uesr = request.user).order_by('-id')
-    # likes = Likes.objects.all()
-    # post = Posts.objects.all
-    # user_list = []
-    # for i in likes:
-    #     users = i.user_liker
-    #     user_list.append(users)
-    # print(user_list)
-    # posts.like_count = like
+    user = request.user
     all_post = Posts.objects.all().order_by('-id')
     paginator = Paginator(all_post,10)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
+
+    # post_likes_list = []
+    # for i in posts:
+    #     post_likes = i.post_likes
+    #     post_likes_list.append(post_likes) 
+    # print(post_likes_list)
+
+    # if user in post_likes_list is not None:
+    #     button_like = 'Unlike'
+    # else:
+    #     button_like = 'Like'
+        # print(button_like)
+
     return render(request, "network/all_posts.html",{
         'posts':posts,
-        # 'likes':likes,
+        # 'button':button_like,
     })
 
 
@@ -224,31 +229,30 @@ def posts_id(request, id):
 def like(request):
     user = request.user
     like = Likes.objects.all()
-    # posts = Posts.objects.get(id=id)
-    # post = Posts.objects.get(id = id)
+
     if request.method == "GET":
         return JsonResponse([likes.serialize() for likes in like], safe=False)
 
-
-    if request.method == 'POST':
+    elif request.method == "PUT":
         data = json.loads(request.body)
-        post = data.get("post", "")
-        likes = Likes(
-            user_liker = user,
-            post_like = post,
-        )
-        likes.save()
-        likes = Likes.objects.all()
-        post = Posts.objects.get(id = post)
-        # print(post.post_likes)
-        # user_list = []
-        # for i in likes:
-        #     users = i.user_liker
-        #     user = User.objects.get(username = users)
-        (post.post_likes).add(request.user)
-        # print(user_list)
+        id = data["post"]
+        postss = Posts.objects.get(id = id)
+        list_user = postss.post_likes
+        
+        if(user in list_user.all() is not None):
+            list_user.remove(user) 
+            print('remove')
+            # button = 'Like'
 
-        return JsonResponse({"message": "successfully."}, status=201)
+        else:
+            list_user.add(user) 
+            print('add')
+        # postss.save()
+        print(list_user.all())
+        return HttpResponse(status=204)
+
+    else:
+        return JsonResponse({"error": "GET or PUT request required."}, status=400)
 
 
 @login_required

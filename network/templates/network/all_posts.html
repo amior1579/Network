@@ -19,9 +19,12 @@
                 <p>{{all_posts.post_description}}</p>
                 <p>{{all_posts.post_date}}</p>
                 <p id="like_count_{{all_posts.id}}">{{all_posts.post_likes.count}}</p>
-                <button value="{{all_posts.id}}" id="like_button_{{all_posts.id}}">Like</button>
-                
-
+                {% if user not in all_posts.post_likes.all%}
+                    <button value="{{all_posts.id}}" id="like_button_{{all_posts.id}}">Like</button>
+                {% else %}    
+                    <button value="{{all_posts.id}}" id="like_button_{{all_posts.id}}">Unlike</button>
+                {% endif %}
+                {{user}}
             </div>
         </li>
 

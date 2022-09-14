@@ -18,13 +18,29 @@ document.addEventListener('DOMContentLoaded',function(){
         console.log(posts.id);
 
         fetch('/like',{
-            method:'POST',
+            method:'PUT',
             headers: {'Content-Type': 'application/json',},
             body: JSON.stringify ({
-                post: `${posts.id}`
+                post: `${posts.id}`,
                 // post: 'aaaaaa'
             })
+
         })
+        const like =  document.querySelector(`#like_count_${posts.id}`)
+        console.log(parseInt(like.innerHTML));
+        const like_num = parseInt(like.innerHTML)
+        console.log(like_num);
+        const like_button = document.querySelector(`#like_button_${posts.id}`)
+        console.log(like_button.innerHTML);
+        if(like_button.innerHTML == 'Like'){
+            like.innerHTML = like_num + 1
+            like_button.innerHTML = 'Unlike'
+        }
+        else {
+            like_button.innerHTML = 'Like'
+            like.innerHTML = like_num - 1
+        }
+        console.log(like_num + 1);
     }
 
 

@@ -22,7 +22,7 @@ class Posts(models.Model):
     post_description = models.TextField()
     post_date = models.DateTimeField(default=datetime.now, blank=True)
     post_likes = models.ManyToManyField(User,blank=True,default=None, related_name='post_likes')
-    like_count = models.BigIntegerField(default=0)
+    like_count = models.CharField(max_length=200)
 
     def __str__(self):
         return f'{self.id}.{self.post_title},{self.post_uesr}'
