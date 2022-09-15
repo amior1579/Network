@@ -3,7 +3,7 @@
 
 {% block head %}
     <title>Profile</title>
-    <link rel="stylesheet" href="{% static 'network/all_posts_style.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'network/all_posts_style.css' %}"> -->
     <link rel="stylesheet" href="{% static 'network/profile.css' %}">
     <script src="{% static 'network/index.js' %}"></script>
     <script src="{% static 'network/all_post.js' %}"></script>
@@ -12,7 +12,6 @@
 
 {% block body %}
 
-<h1>Profile</h1>
 
 <div class="div_user_profile">
     <li class="li_user_profile">
@@ -30,7 +29,7 @@
     </li>
 </div>
 
-<div>
+<div class="div_new_post_button">
     <button id="new_post_button">New Post</button>
 </div>
 
@@ -42,33 +41,38 @@
 
         <label for="description">Description:</label>
         <textarea cols="20" rows="5" name="description" id="description"></textarea>
-        <input type="submit">
+        <input class="submit_button" type="submit">
     </form>
 </div>
 
+<hr>
 
-<div>
+<div class="div_posts">
     {% for all_posts in posts %}
-        <li>
-            <div class="div_posts">
-                <h2>{{all_posts.post_uesr}}</h2>
-                <h4>{{all_posts.post_title}}</h4>
+        <li class="li_posts">
+            <div class="div_single_posts">
+                <div>
+                    <h2 class="post_user_name">{{all_posts.post_uesr}}</h2>
+                    <button class="post_edit_button" id="edit_button_{{all_posts.id}}" div-id="{{all_posts.id}}">Edit</button>
+                </div>
+                <p class="post_date">{{all_posts.post_date}}</p><hr>
+                <p>{{all_posts.post_title}}</p>
                 
                 <div class="div_update_description_{{all_posts.id}}" id="div_update_description">
                         {% csrf_token %}
                         <textarea name="update_description" id="form_update_description_{{all_posts.id}}" cols="30" rows="5"></textarea>
                         <input type="submit" id="submit_button_{{all_posts.id}}">
                 </div>
+                <p class="posts_description" id="post_description_{{all_posts.id}}">{{all_posts.post_description}}</p>
 
-                <p id="post_description_{{all_posts.id}}">{{all_posts.post_description}}</p>
-                <p>{{all_posts.post_date}}</p>
-                <p id="like_count_{{all_posts.id}}">{{all_posts.post_likes.count}}</p>
-                {% if request.user not in all_posts.post_likes.all %}
-                    <button value="{{all_posts.id}}" id="like_button_{{all_posts.id}}">Like</button>
-                {% else %}    
-                    <button value="{{all_posts.id}}" id="like_button_{{all_posts.id}}">Unlike</button>
-                {% endif %}                  
-                <button id="edit_button_{{all_posts.id}}" div-id="{{all_posts.id}}">Edit</button>
+                <div class="div_likes">
+                    {% if request.user not in all_posts.post_likes.all %}
+                        <button class="post_likes_button" value="{{all_posts.id}}" id="like_button_{{all_posts.id}}">Like</button>
+                    {% else %}    
+                        <button class="post_likes_button" value="{{all_posts.id}}" id="like_button_{{all_posts.id}}">Unlike</button>
+                    {% endif %}                  
+                    <p class="post_likes_count" id="like_count_{{all_posts.id}}">{{all_posts.post_likes.count}}</p>
+                </div>
                 
             </div>
         </li>
