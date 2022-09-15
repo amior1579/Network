@@ -93,6 +93,9 @@ input , textarea{
 .post_user_name_link{
     font-size: 25px;
 }
+.post_user_name_link:hover{
+    text-decoration: none;
+}
 
 
 .post_edit_button{

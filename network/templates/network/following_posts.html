@@ -4,44 +4,46 @@
 
 {% block head %}
     <title>All Posts</title>
-    <link rel="stylesheet" href="{% static 'network/all_posts_style.css' %}">
+    <link rel="stylesheet" href="{% static 'network/profile.css' %}">
     <script src="{% static 'network/all_post.js' %}"></script>
 {% endblock %}
 
 {% block body %}
 
-    {% for all_posts in posts %}
-        <li>
-            <div class="div_posts">
-                <a href="{% url 'profile' all_posts.post_uesr %}">{{all_posts.post_uesr}}</a><hr>
-                <h4>{{all_posts.post_title}}</h4>
-                <p>{{all_posts.post_description}}</p>
-                <p>{{all_posts.post_date}}</p>
-                <p id="like_count_{{all_posts.id}}">{{all_posts.post_likes.count}}</p>
+    <div class="div_posts">
+        {% for all_posts in posts %}
+            <li class="li_posts">
+                <div class="div_single_posts">
+                    <div>
+                        <a class="post_user_name_link" href="{% url 'profile' all_posts.post_uesr %}">{{all_posts.post_uesr}}</a>
+                    </div>
+                    <p class="post_date">{{all_posts.post_date}}</p><hr>
+                    <p>{{all_posts.post_title}}</p>
+                    <p class="posts_description" id="post_description_{{all_posts.id}}">{{all_posts.post_description}}</p>
 
-                {% if user not in all_posts.post_likes.all%}
-                    <button value="{{all_posts.id}}" id="like_button_{{all_posts.id}}">Like</button>
-                {% else %}    
-                    <button value="{{all_posts.id}}" id="like_button_{{all_posts.id}}">Unlike</button>
-                {% endif %}                
-
-            </div>
-        </li>
-
+                    <div class="div_likes">
+                        {% if request.user not in all_posts.post_likes.all %}
+                            <button class="post_likes_button" value="{{all_posts.id}}" id="like_button_{{all_posts.id}}">Like</button>
+                        {% else %}    
+                            <button class="post_likes_button" value="{{all_posts.id}}" id="like_button_{{all_posts.id}}">Unlike</button>
+                        {% endif %}                  
+                        <p class="post_likes_count" id="like_count_{{all_posts.id}}">{{all_posts.post_likes.count}}</p>
+                    </div>
+                    
+                </div>
+            </li>
         {% endfor %}
+    </div>
         <br>
-        <!-- has previous:{{posts.has_previous}} <br>
-            has next page:{{posts.has_next}} <br>
-            has number of pages:{{posts.paginator.num_pages}} <br> -->
-            
+        
         <div class="div_paginator">
             {% if posts.has_previous %}
                 <a href="?page=1">&laquo First</a>
                 <a href="?page={{posts.previous_page_number}}">Previous</a>
             {% endif %}
-    
-            {{posts}}
-    
+        
+            <p class="num_page">{{posts}}</p>
+        
             {% if posts.has_next %}
                 <a href="?page={{posts.next_page_number}}">Next</a>
                 <a href="?page={{posts.paginator.num_pages}}">Last &raquo</a>
