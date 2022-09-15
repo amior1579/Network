@@ -102,7 +102,7 @@ def all_posts(request):
 
 
 def my_account(request,user):
-    all_post = Posts.objects.filter(post_uesr = request.user)
+    all_post = Posts.objects.filter(post_uesr = request.user).order_by('-id')
     userr = User.objects.get(username = user)
     follower_len = Followers.objects.filter(followed_users = userr).count()
     following_len = Followers.objects.filter(follower = userr).count()
