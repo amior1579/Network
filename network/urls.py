@@ -15,15 +15,7 @@ urlpatterns = [
     path("follower", views.follower, name="follower"),
     path("following_posts", views.following_posts, name="following_posts"),
     path("like", views.like, name="like"),
-    path("like_post", views.like_post, name="like_post"),
-
-    path("update_post/<int:id>", views.update_post, name="update_post"),
-
-
-    # API Routes
     path("posts", views.posts, name="posts"),
     path("posts/<int:id>", views.posts_id, name="posts_id"),
-    # path("api", views.api, name="api"),
-
 
 ]

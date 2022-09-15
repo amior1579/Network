@@ -1,7 +1,3 @@
-from ast import Not
-from distutils.errors import LinkError
-from genericpath import exists
-from tkinter import NO
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
@@ -12,7 +8,6 @@ from django.urls import reverse
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import *
 
@@ -35,7 +30,7 @@ def login_view(request):
         # Check if authentication successful
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+            return redirect('my_account', user=request.user)
         else:
             return render(request, "network/login.html", {
                 "message": "Invalid username and/or password."
@@ -46,7 +41,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect(reverse("index"))
+    return redirect('all_posts')
 
 
 def register(request):
@@ -76,6 +71,7 @@ def register(request):
         return render(request, "network/register.html")
 
 
+
 def all_posts(request):
     user = request.user
     # all_post = Posts.objects.all().order_by('-id').exclude(post_uesr = user)
@@ -84,21 +80,8 @@ def all_posts(request):
     page = request.GET.get('page')
     posts = paginator.get_page(page)
 
-    # post_likes_list = []
-    # for i in posts:
-    #     post_likes = i.post_likes
-    #     post_likes_list.append(post_likes) 
-    # print(post_likes_list)
-
-    # if user in post_likes_list is not None:
-    #     button_like = 'Unlike'
-    # else:
-    #     button_like = 'Like'
-        # print(button_like)
-
     return render(request, "network/all_posts.html",{
         'posts':posts,
-        # 'button':button_like,
     })
 
 
@@ -157,6 +140,8 @@ def follower(request):
         return redirect('profile', user=followed_users)
 
 
+
+
 def following_posts(request):
     followed_users_list = []
     posts_list = []
@@ -181,6 +166,8 @@ def following_posts(request):
     })
 
 
+
+
 def add_post(request):
     user = request.user
     title = request.POST['title']
@@ -192,17 +179,12 @@ def add_post(request):
 
 
 
-
-
-def update_post(request,id):
-    pass
-
 @login_required
 def posts(request):
-    # post = Posts.objects.filter(post_uesr = request.user)
     post = Posts.objects.all().order_by('-id')
- 
     return JsonResponse([posts.serialize() for posts in post], safe=False)
+
+
 
 
 @csrf_exempt
@@ -226,6 +208,9 @@ def posts_id(request, id):
     else:
         return JsonResponse({"error": "GET or PUT request required."}, status=400)
 
+
+
+
 @login_required
 @csrf_exempt
 def like(request):
@@ -243,98 +228,12 @@ def like(request):
         
         if(user in list_user.all() is not None):
             list_user.remove(user) 
-            print('remove')
-            # button = 'Like'
-
         else:
             list_user.add(user) 
-            print('add')
-        # postss.save()
-        print(list_user.all())
+        # print(list_user.all())
         return HttpResponse(status=204)
 
     else:
         return JsonResponse({"error": "GET or PUT request required."}, status=400)
-
-
-@login_required
-@csrf_exempt
-def like_post(request):
-    # like = Likes.objects.get(id = id)
-    like = Likes.objects.all()
-    posts = Posts.objects.get(id=id)
-
-
-
-
-    # if request.method == "GET":
-    #     return JsonResponse(like.serialize())
-
-    # elif request.method == "PUT":
-    #     data = json.loads(request.body)
-    #     like.post_description = data["description"]
-    #     like.save()
-    #     return HttpResponse(status=204)
-
-    # else:
-    #     return JsonResponse({"error": "GET or PUT request required."}, status=400)
-
-
-
-
-
-
-
-    # if request.method == "GET":
-    #     return JsonResponse(like.serialize())
-
-    # if( user in post.post_likes).exist():
-    #     post.post_likes.remove(user)
-    # else:
-    #     post.post_likes.add(user)
-
-    # return redirect('all_posts')
-
-# @api_view(['GET'])
-# def posts(request):
-#     post = Posts.objects.filter(post_uesr = request.user)
-#     serializer = PostsSerializer(post, many=True)
-#     return Response(serializer.data)
-    
-
-# @csrf_exempt
-# @api_view(['GET', 'PUT'])
-# def posts_id(request,id):
-#     try:
-#         post = Posts.objects.get(id = id, post_uesr = request.user)
-#     except Posts.DoesNotExist:
-#         return Response({"error": "post not found."}, status=404)
-
-#     if request.method == "GET":
-#         serializer = PostsSerializer(post)
-#         return Response(serializer.data)
-
-#     elif request.method == 'PUT':
-#         serializer = PostsSerializer(post, data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return HttpResponse(status=204)
-#         return JsonResponse({"error": "GET or PUT request required."}, status=400)
-#     else:
-#         return JsonResponse({""}, status=204)
-#         # return JsonResponse([posts.serialize() for posts in post], safe=False)
-
-
-# @api_view(['GET'])
-# def api(request):
-#     api_urls ={
-#         'List':'/task-list/',
-#         'Detail View':'/task-detail/<str:pk>/',
-#         'Create':'/task-create/',
-#         'Update':'/task-update/<str:pk>/',
-#         'Delete':'/task-delete/<str:pk>/',
-        
-#     }
-#     return Response(api_urls)
 
 
