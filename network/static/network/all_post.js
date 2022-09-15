@@ -8,7 +8,9 @@ document.addEventListener('DOMContentLoaded',function(){
             console.log(posts.id);
 
             const like = document.querySelector(`#like_button_${posts.id}`)
-            like.addEventListener('click', ()=> like_post(posts))
+            if(like){
+                like.addEventListener('click', ()=> like_post(posts), false)
+            }
             console.log(like);
             
         })

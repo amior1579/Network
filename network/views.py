@@ -200,6 +200,7 @@ def update_post(request,id):
 def posts(request):
     # post = Posts.objects.filter(post_uesr = request.user)
     post = Posts.objects.all().order_by('-id')
+ 
     return JsonResponse([posts.serialize() for posts in post], safe=False)
 
 
