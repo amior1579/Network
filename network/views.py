@@ -115,7 +115,7 @@ def my_account(request,user):
 def profile(request,user):
     follower = request.user
     user = User.objects.get(username = user)
-    all_post_user = Posts.objects.filter(post_uesr = user) 
+    all_post_user = Posts.objects.filter(post_uesr = user).order_by('-id')
     followed_users_len = Followers.objects.filter(followed_users = user).count()
     following_len = Followers.objects.filter(follower = user).count()
     followed_users = Followers.objects.filter(followed_users = user)
