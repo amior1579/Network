@@ -166,7 +166,7 @@ def following_posts(request):
 
     for x in followed_users_list:
         username2 = User.objects.get(username = x)
-        all_post = Posts.objects.filter(post_uesr = username2)
+        all_post = Posts.objects.filter(post_uesr = username2).order_by('-id')
 
         for y in all_post:
             posts_list.append(y)
