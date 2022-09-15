@@ -12,7 +12,6 @@
 
 {% block body %}
 
-
 <div class="div_user_profile">
     <li class="li_user_profile">
         <div>Followers</div>
@@ -41,6 +40,7 @@
 
         <label for="description">Description:</label>
         <textarea cols="20" rows="5" name="description" id="description"></textarea>
+
         <input class="submit_button" type="submit">
     </form>
 </div>
@@ -77,6 +77,6 @@
             </div>
         </li>
     {% endfor %}
-    {{user}}
 </div>
+
 {% endblock %}

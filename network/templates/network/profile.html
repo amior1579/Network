@@ -35,22 +35,28 @@
     </li>
 </div>
 
-
+<hr>
 
 <div class="div_posts">
     {% for all_posts in posts %}
         <li class="li_posts">
-            <div class="div_single_post">
-                <h2>{{all_posts.post_uesr}}</h2>
-                <h4>{{all_posts.post_title}}</h4>
-                <p id="post_description_{{all_posts.id}}">{{all_posts.post_description}}</p>
-                <p>{{all_posts.post_date}}</p>
-                <p id="like_count_{{all_posts.id}}">{{all_posts.post_likes.count}}</p>
-                {% if request.user not in all_posts.post_likes.all %}
-                    <button value="{{all_posts.id}}" id="like_button_{{all_posts.id}}">Like</button>
-                {% else %}    
-                    <button value="{{all_posts.id}}" id="like_button_{{all_posts.id}}">Unlike</button>
-                {% endif %}                 
+            <div class="div_single_posts">
+                <div>
+                    <h2 class="post_user_name">{{all_posts.post_uesr}}</h2>
+                </div>
+                <p class="post_date">{{all_posts.post_date}}</p><hr>
+                <p>{{all_posts.post_title}}</p>
+                <p class="posts_description" id="post_description_{{all_posts.id}}">{{all_posts.post_description}}</p>
+
+                <div class="div_likes">
+                    {% if request.user not in all_posts.post_likes.all %}
+                        <button class="post_likes_button" value="{{all_posts.id}}" id="like_button_{{all_posts.id}}">Like</button>
+                    {% else %}    
+                        <button class="post_likes_button" value="{{all_posts.id}}" id="like_button_{{all_posts.id}}">Unlike</button>
+                    {% endif %}                  
+                    <p class="post_likes_count" id="like_count_{{all_posts.id}}">{{all_posts.post_likes.count}}</p>
+                </div>
+                
             </div>
         </li>
     {% endfor %}

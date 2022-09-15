@@ -1,12 +1,18 @@
 *{
     font-family: sans-serif;
 }
+/* --------------------------------------------- */
+
+.page_title{
+    padding: 30px 0 10px 30px;
+}
+
+/* --------------------------------------------- */
 
 .div_user_profile{
     display: block;
     width:fit-content ; 
     text-align: center;
-    /* border: solid 1px rgb(202, 202, 202); */
     box-shadow: 1px 1px 10px rgb(204, 204, 204);
     border-radius: 5px;
     padding: 25px 40px 25px 40px;
@@ -84,6 +90,11 @@ input , textarea{
     display: inline-block;
 }
 
+.post_user_name_link{
+    font-size: 25px;
+}
+
+
 .post_edit_button{
     display: inline;
     float: right;
@@ -115,4 +126,16 @@ input , textarea{
 
 .post_likes_count{
     display: inline-block;
+}
+
+/* ----------------------------------------------------------- */
+
+.div_paginator{
+    text-align: center;
+    margin: 0 0 50px 0;
+}
+
+.num_page{
+    display: inline-block;
+    font-size: 18px;
 }

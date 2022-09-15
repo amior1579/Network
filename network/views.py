@@ -78,7 +78,8 @@ def register(request):
 
 def all_posts(request):
     user = request.user
-    all_post = Posts.objects.all().order_by('-id').exclude(post_uesr = user)
+    # all_post = Posts.objects.all().order_by('-id').exclude(post_uesr = user)
+    all_post = Posts.objects.all().order_by('-id')
     paginator = Paginator(all_post,10)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
