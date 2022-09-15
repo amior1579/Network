@@ -20,7 +20,9 @@ document.addEventListener('DOMContentLoaded',function(){
 
 
             const edit = document.querySelector(`#edit_button_${posts.id}`)
-            edit.addEventListener('click', ()=> edit_post(posts))
+            if(edit){
+                edit.addEventListener('click', ()=> edit_post(posts), false)
+            }
 
             
             
