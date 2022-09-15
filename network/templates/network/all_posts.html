@@ -43,8 +43,8 @@
             {{posts}}
     
             {% if posts.has_next %}
-                <a href="?page={{posts.next_page_number}}">Last</a>
-                <a href="?page={{posts.paginator.num_pages}}">Next &raquo</a>
+                <a href="?page={{posts.next_page_number}}">Next</a>
+                <a href="?page={{posts.paginator.num_pages}}">Last &raquo</a>
             {% endif %}
         </div>
 
