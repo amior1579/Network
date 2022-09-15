@@ -3,63 +3,58 @@
 
 {% block head %}
     <title>Profile</title>
-    <!-- <link rel="stylesheet" href="{% static 'network/all_posts_style.css' %}"> -->
-    <link rel="stylesheet" href="{% static 'network/profile.css' %}">
-    <script src="{% static 'network/all_post.js' %}"></script>
-
+    <link rel="stylesheet" href="{% static 'network/styles.css' %}">
+    <script src="{% static 'network/like_posts.js' %}"></script>
 {% endblock %}
 
 {% block body %}
 
-
-<div class="div_user_profile">
-    <li class="li_user_profile">
-        <div>Followers</div>
-        <div>{{follower_len}}</div>
-    </li>
-
-    <li class="li_user_profile">
-        <div class="username"><h2>{{user}}</h2></div>
-        <form action="{% url 'follower' %}" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="user" value="{{user}}">
-            <input type="hidden" name="follower" value="{{follower}}">
-            <input type="hidden" name="value" value="{{button_and_value}}" readonly>
-            <button type="submit">{{button_and_value}}</button>
-        </form>
-    </li>
-
-    <li class="li_user_profile">
-        <div>Following</div>
-        <div>{{following_len}}</div>
-    </li>
-</div>
-
-<hr>
-
-<div class="div_posts">
-    {% for all_posts in posts %}
-        <li class="li_posts">
-            <div class="div_single_posts">
-                <div>
-                    <h2 class="post_user_name">{{all_posts.post_uesr}}</h2>
-                </div>
-                <p class="post_date">{{all_posts.post_date}}</p><hr>
-                <p>{{all_posts.post_title}}</p>
-                <p class="posts_description" id="post_description_{{all_posts.id}}">{{all_posts.post_description}}</p>
-
-                <div class="div_likes">
-                    {% if request.user not in all_posts.post_likes.all %}
-                        <button class="post_likes_button" value="{{all_posts.id}}" id="like_button_{{all_posts.id}}">Like</button>
-                    {% else %}    
-                        <button class="post_likes_button" value="{{all_posts.id}}" id="like_button_{{all_posts.id}}">Unlike</button>
-                    {% endif %}                  
-                    <p class="post_likes_count" id="like_count_{{all_posts.id}}">{{all_posts.post_likes.count}}</p>
-                </div>
-                
-            </div>
+    <div class="div_user_profile">
+        <li class="li_user_profile">
+            <div>Followers</div>
+            <div>{{follower_len}}</div>
         </li>
-    {% endfor %}
-</div>
+
+        <li class="li_user_profile">
+            <div class="username"><h2>{{user}}</h2></div>
+            <form action="{% url 'follower' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="user" value="{{user}}">
+                <input type="hidden" name="follower" value="{{follower}}">
+                <input type="hidden" name="value" value="{{button_and_value}}" readonly>
+                <button type="submit">{{button_and_value}}</button>
+            </form>
+        </li>
+
+        <li class="li_user_profile">
+            <div>Following</div>
+            <div>{{following_len}}</div>
+        </li>
+    </div>
+
+    <hr>
+
+    <div class="div_posts">
+        {% for all_posts in posts %}
+            <li class="li_posts">
+                <div class="div_single_posts">
+                    <div>
+                        <h2 class="post_user_name">{{all_posts.post_uesr}}</h2>
+                    </div>
+                    <p class="post_date">{{all_posts.post_date}}</p><hr>
+                    <p>{{all_posts.post_title}}</p>
+                    <p class="posts_description" id="post_description_{{all_posts.id}}">{{all_posts.post_description}}</p>
+                    <div class="div_likes">
+                        {% if request.user not in all_posts.post_likes.all %}
+                            <button class="post_likes_button" value="{{all_posts.id}}" id="like_button_{{all_posts.id}}">Like</button>
+                        {% else %}    
+                            <button class="post_likes_button" value="{{all_posts.id}}" id="like_button_{{all_posts.id}}">Unlike</button>
+                        {% endif %}                  
+                        <p class="post_likes_count" id="like_count_{{all_posts.id}}">{{all_posts.post_likes.count}}</p>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </div>
 
 {% endblock %}

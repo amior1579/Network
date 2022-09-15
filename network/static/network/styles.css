@@ -1,0 +1,144 @@
+*{
+    font-family: sans-serif;
+}
+/* --------------------------------------------- */
+
+.page_title{
+    padding: 30px 0 10px 30px;
+}
+
+/* --------------------------------------------- */
+
+.div_user_profile{
+    display: block;
+    width:fit-content ; 
+    text-align: center;
+    box-shadow: 1px 1px 10px rgb(204, 204, 204);
+    border-radius: 5px;
+    padding: 25px 40px 25px 40px;
+    margin: 40px auto 0 auto;
+}
+
+.li_user_profile{
+    display: inline-block;
+    margin: 0;
+    padding: 40px;
+    
+}
+
+.li_user_profile .follow_button{
+    margin: 40px 0 -30px 0;
+}
+
+/* ----------------------------------------- */
+
+.div_new_post_button{
+    margin: 20px auto 0 auto;
+    text-align: center;
+}
+
+#new_post_button{
+    width: 300px; 
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+}
+
+/* ----------------------------------------- */
+
+.div_add_post{
+    border: solid 1px black;
+    width: fit-content;
+    padding: 20px 49px 20px 49px;
+    margin: 15px auto 0 auto;
+    text-align: center;
+}
+
+input , textarea{
+    display: block;
+    width: 200px;
+}
+
+.submit_button{
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    margin: 5px 0 0 0;
+}
+
+/* ----------------------------------------- */
+.div_posts{
+    margin: 0 0 0 20px;
+}
+
+.li_posts{
+    display: inline-block;
+    padding: 8px;
+}
+
+.div_single_posts{
+    width: 400px;
+    padding: 20px;
+    margin:10px 0 0 0 ;
+    border-radius: 5px;
+    border: solid 1px rgb(121, 121, 121);
+    
+}
+
+
+.post_user_name{
+    display: inline-block;
+}
+
+.post_user_name_link{
+    font-size: 25px;
+}
+.post_user_name_link:hover{
+    text-decoration: none;
+}
+
+
+.post_edit_button{
+    display: inline;
+    float: right;
+    border: none;
+    padding: 5px 10px 5px 10px;
+    border-radius: 5px;
+}
+
+.post_date{
+    font-size: 12px;
+}
+
+.posts_description{
+    background-color: rgba(180, 180, 180, 0.397);
+    padding: 8px;
+    border-radius: 5px;
+}
+
+.div_likes{
+    text-align: right;
+}
+
+.post_likes_button{
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    margin: 5px 0 0 0;
+}
+
+.post_likes_count{
+    display: inline-block;
+}
+
+/* ----------------------------------------------------------- */
+
+.div_paginator{
+    text-align: center;
+    margin: 0 0 50px 0;
+}
+
+.num_page{
+    display: inline-block;
+    font-size: 18px;
+}

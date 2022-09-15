@@ -2,81 +2,76 @@
 {% load static %}
 
 {% block head %}
-    <title>Profile</title>
-    <!-- <link rel="stylesheet" href="{% static 'network/all_posts_style.css' %}"> -->
-    <link rel="stylesheet" href="{% static 'network/profile.css' %}">
+    <title>My Account</title>
+    <link rel="stylesheet" href="{% static 'network/styles.css' %}">
     <script src="{% static 'network/index.js' %}"></script>
-    <script src="{% static 'network/all_post.js' %}"></script>
-
+    <script src="{% static 'network/like_posts.js' %}"></script>
 {% endblock %}
 
 {% block body %}
 
-<div class="div_user_profile">
-    <li class="li_user_profile">
-        <div>Followers</div>
-        <div>{{follower_len}}</div>
-    </li>
-
-    <li class="li_user_profile">
-        <div class="username"><h2>{{user}}</h2></div>
-    </li>
-
-    <li class="li_user_profile">
-        <div>Following</div>
-        <div>{{following_len}}</div>
-    </li>
-</div>
-
-<div class="div_new_post_button">
-    <button id="new_post_button">New Post</button>
-</div>
-
-<div class="div_add_post">
-    <form action="{% url 'add_post' %}" method="post">
-        {% csrf_token %}
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title">
-
-        <label for="description">Description:</label>
-        <textarea cols="20" rows="5" name="description" id="description"></textarea>
-
-        <input class="submit_button" type="submit">
-    </form>
-</div>
-
-<hr>
-
-<div class="div_posts">
-    {% for all_posts in posts %}
-        <li class="li_posts">
-            <div class="div_single_posts">
-                <div>
-                    <h2 class="post_user_name">{{all_posts.post_uesr}}</h2>
-                    <button class="post_edit_button" id="edit_button_{{all_posts.id}}" div-id="{{all_posts.id}}">Edit</button>
-                </div>
-                <p class="post_date">{{all_posts.post_date}}</p><hr>
-                <p>{{all_posts.post_title}}</p>
-                
-                <div class="div_update_description_{{all_posts.id}}" id="div_update_description">
-                        {% csrf_token %}
-                        <textarea name="update_description" id="form_update_description_{{all_posts.id}}" cols="30" rows="5"></textarea>
-                        <input type="submit" id="submit_button_{{all_posts.id}}">
-                </div>
-                <p class="posts_description" id="post_description_{{all_posts.id}}">{{all_posts.post_description}}</p>
-
-                <div class="div_likes">
-                    {% if request.user not in all_posts.post_likes.all %}
-                        <button class="post_likes_button" value="{{all_posts.id}}" id="like_button_{{all_posts.id}}">Like</button>
-                    {% else %}    
-                        <button class="post_likes_button" value="{{all_posts.id}}" id="like_button_{{all_posts.id}}">Unlike</button>
-                    {% endif %}                  
-                    <p class="post_likes_count" id="like_count_{{all_posts.id}}">{{all_posts.post_likes.count}}</p>
-                </div>
-                
-            </div>
+    <div class="div_user_profile">
+        <li class="li_user_profile">
+            <div>Followers</div>
+            <div>{{follower_len}}</div>
         </li>
-    {% endfor %}
-</div>
+
+        <li class="li_user_profile">
+            <div class="username"><h2>{{user}}</h2></div>
+        </li>
+
+        <li class="li_user_profile">
+            <div>Following</div>
+            <div>{{following_len}}</div>
+        </li>
+    </div>
+
+    <div class="div_new_post_button">
+        <button id="new_post_button">New Post</button>
+    </div>
+
+    <div class="div_add_post">
+        <form action="{% url 'add_post' %}" method="post">
+            {% csrf_token %}
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title">
+
+            <label for="description">Description:</label>
+            <textarea cols="20" rows="5" name="description" id="description"></textarea>
+
+            <input class="submit_button" type="submit">
+        </form>
+    </div>
+
+    <hr>
+
+    <div class="div_posts">
+        {% for all_posts in posts %}
+            <li class="li_posts">
+                <div class="div_single_posts">
+                    <div>
+                        <h2 class="post_user_name">{{all_posts.post_uesr}}</h2>
+                        <button class="post_edit_button" id="edit_button_{{all_posts.id}}" div-id="{{all_posts.id}}">Edit</button>
+                    </div>
+                    <p class="post_date">{{all_posts.post_date}}</p><hr>
+                    <p>{{all_posts.post_title}}</p>
+                    <div class="div_update_description_{{all_posts.id}}" id="div_update_description">
+                            {% csrf_token %}
+                            <textarea name="update_description" id="form_update_description_{{all_posts.id}}" cols="30" rows="5"></textarea>
+                            <input type="submit" id="submit_button_{{all_posts.id}}">
+                    </div>
+                    <p class="posts_description" id="post_description_{{all_posts.id}}">{{all_posts.post_description}}</p>
+                    <div class="div_likes">
+                        {% if request.user not in all_posts.post_likes.all %}
+                            <button class="post_likes_button" value="{{all_posts.id}}" id="like_button_{{all_posts.id}}">Like</button>
+                        {% else %}    
+                            <button class="post_likes_button" value="{{all_posts.id}}" id="like_button_{{all_posts.id}}">Unlike</button>
+                        {% endif %}                  
+                        <p class="post_likes_count" id="like_count_{{all_posts.id}}">{{all_posts.post_likes.count}}</p>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </div>
 
 {% endblock %}
