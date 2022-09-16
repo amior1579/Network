@@ -117,6 +117,8 @@ input , textarea{
     background-color: rgba(180, 180, 180, 0.397);
     padding: 8px;
     border-radius: 5px;
+    height: 130px;
+    overflow-y: scroll;
 }
 
 .div_likes{
