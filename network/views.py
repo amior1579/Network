@@ -10,8 +10,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from rest_framework.response import Response
 from .serializers import *
-
-
 from .models import *
 
 
@@ -123,6 +121,8 @@ def profile(request,user):
         'button_and_value':button_and_value,
     })
 
+
+
 def follower(request):
     if request.method == 'POST':
         value = request.POST['value']
@@ -167,7 +167,6 @@ def following_posts(request):
 
 
 
-
 def add_post(request):
     user = request.user
     title = request.POST['title']
@@ -175,7 +174,6 @@ def add_post(request):
     post = Posts(post_title=title, post_description=description, post_uesr=request.user)
     post.save()
     return redirect('my_account', user=user)
-
 
 
 
@@ -207,7 +205,6 @@ def posts_id(request, id):
 
     else:
         return JsonResponse({"error": "GET or PUT request required."}, status=400)
-
 
 
 
