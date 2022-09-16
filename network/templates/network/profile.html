@@ -17,6 +17,8 @@
 
         <li class="li_user_profile">
             <div class="username"><h2>{{user}}</h2></div>
+            {% if user == request.user %}
+            {% else %}
             <form action="{% url 'follower' %}" method="post">
                 {% csrf_token %}
                 <input type="hidden" name="user" value="{{user}}">
@@ -24,6 +26,7 @@
                 <input type="hidden" name="value" value="{{button_and_value}}" readonly>
                 <button class="follow_button" type="submit">{{button_and_value}}</button>
             </form>
+            {% endif %}
         </li>
 
         <li class="li_user_profile">
