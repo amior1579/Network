@@ -113,6 +113,24 @@ input , textarea{
     font-size: 12px;
 }
 
+/* #div_update_description{
+    display: inline-block;
+    width: max-content;
+    background-color: aqua;
+} */
+
+.textarea_update_description{
+    width: max-content;
+    height: 116px;
+    width: 350px;
+}
+
+.edit_button_update_description{
+    /* display: block; */
+    width: 100px;
+    text-align:center;
+}
+
 .posts_description{
     background-color: rgba(180, 180, 180, 0.397);
     padding: 8px;
